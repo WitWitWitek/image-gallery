@@ -1,0 +1,18 @@
+@use './variables' as *;
+
+@mixin btn(
+    $fcolor: $popPurple,
+    $bgc: $lightGreen,
+    $br-color: $popPurple,
+) {
+    color: $fcolor;
+    background-color: $bgc;
+    border: 2px $br-color solid;
+    cursor: pointer;
+    padding: 5px 10px;
+    &:hover {
+        background-color: $popPurple;
+        color: $bgc;
+        border: 2px $bgc solid;
+    }
+}

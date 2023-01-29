@@ -1,0 +1,49 @@
+@use './variables' as *;
+@use './buttons' as *;
+@use './breakpoints' as *;
+
+.dashboard {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    height: 100vh;
+    width: 100%;
+    background: rgba($electricGreen, 0.8);
+    backdrop-filter: blur(2px);
+    transform: translateX(-100%);
+    transition: transform ease .2s;
+    list-style: none;
+
+    &.isMenuActive {
+        transform: translateX(0%);
+    }
+
+    &__item {
+        margin: 10px 0;
+    }
+    
+    &__user {
+        @extend .dashboard__item;
+        display: flex;
+        flex-direction: column;
+        width: 100px;
+    }
+}
+
+@include sm {
+    .dashboard {
+        position: relative;
+        height: 100%;
+        grid-row: 2 / 3;
+        grid-column: 1 / 2;
+        transform: translateX(0%);
+        height: calc(100vh - 50px);
+
+    }
+}
+

@@ -1,0 +1,25 @@
+@use './variables' as *;
+@use './buttons' as *;
+@use './breakpoints' as *;
+
+@include sm {
+    .image-list {
+        width: 100%;
+        min-height: 100vh;
+        padding: 0 15px;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: $popPurple;
+    border-radius: 10px;
+}
