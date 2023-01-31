@@ -33,6 +33,10 @@
         flex-direction: column;
         width: 100px;
     }
+
+    &__button {
+        @include btn;
+    }
 }
 
 @include sm {

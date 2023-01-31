@@ -1,5 +1,5 @@
-import ImagesList from "../features/ImagesList"
-import NewImageForm from "../features/NewImageForm"
+import ImagesList from "../features/images/ImagesList"
+import NewImageForm from "../features/images/NewImageForm"
 
 const Home = () => {
   return (

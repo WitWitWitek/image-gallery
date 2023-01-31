@@ -1,8 +1,8 @@
 import { useDeleteImageMutation, useUpdateImageMutation } from "./imagesApiSlice"
 import { imageProps } from "./imageTypes"
-import useDate from '../hooks/useDate'
+import useDate from '../../hooks/useDate'
 import React, { useState } from "react"
-import '../styles/ImageItem.scss'
+import '../../styles/ImageItem.scss'
 
 type ImageItemProps = {
   imageProps: imageProps

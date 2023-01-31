@@ -1,6 +1,9 @@
 import express from "express";
-import { getAllImages, postImage, deleteImage, updateImage } from "../controllers/images";
+import { getAllImages, postImage, deleteImage, updateImage } from "../controllers/imagesController";
 const router = express.Router()
+import verifyJWT from "../middleware/verifyJWT";
+
+router.use(verifyJWT)
 
 router
     .get('/', getAllImages)

@@ -1,7 +1,7 @@
 import ImageItem from "./ImageItem"
 import { useGetImagesQuery } from "./imagesApiSlice"
 import { imageProps } from "./imageTypes"
-import '../styles/ImageList.scss'
+import '../../styles/ImageList.scss'
 
 const ImagesList = () => {
 

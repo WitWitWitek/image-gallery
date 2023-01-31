@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useAddNewImageMutation } from '../features/imagesApiSlice';
-import '../styles/NewImage.scss'
+import { useAddNewImageMutation } from './imagesApiSlice';
+import '../../styles/NewImage.scss'
 
 const NewImageForm = () => {
     const [title, setTitle] = useState<string>('')
