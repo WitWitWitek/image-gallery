@@ -11,7 +11,7 @@ const ImagesList = () => {
     // isSuccess,
     isError,
     // error
-  } = useGetImagesQuery(undefined, {
+  } = useGetImagesQuery('imagesList', {
     pollingInterval: 15000,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
