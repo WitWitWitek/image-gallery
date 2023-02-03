@@ -4,8 +4,8 @@ import NewImageForm from "../features/images/NewImageForm"
 const Home = () => {
   return (
     <>
-        <NewImageForm />
-        <ImagesList />
+      <NewImageForm />
+      <ImagesList />
     </>
   )
 }

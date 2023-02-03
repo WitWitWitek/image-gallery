@@ -4,27 +4,31 @@ import { useLoginMutation } from './authApiSlice'
 import { useDispatch } from 'react-redux'
 import { setCredentials } from './authSlice'
 import { useNavigate } from 'react-router-dom'
+import usePersist from '../../hooks/usePersist'
 
 const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const [login, { isLoading }] = useLoginMutation()
+    const [persist, setPersist] = usePersist()
+    const [login, { isSuccess, isLoading }] = useLoginMutation()
 
     const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)
     const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)
 
+    const handleToggle = () => setPersist((prev: boolean) => !prev)
     const handleSubmission = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
             const { accessToken } = await login({username, password}).unwrap()
-            dispatch(setCredentials({ accessToken }))
+            isSuccess && dispatch(setCredentials({ accessToken }))
             setUsername('')
             setPassword('')
-            navigate('/')
+            navigate('/dashboard')
         } catch (err) {
             console.log(err);
+            navigate('/login')
         }
     }
 
@@ -50,6 +54,16 @@ const Login = () => {
                 />
 
                 <button className='login__button' type='submit'>{isLoading ? 'Loading...': 'Sign in'}</button>
+
+                <label htmlFor="persist">
+                    <input 
+                        type="checkbox"
+                        id='persist'
+                        onChange={handleToggle}
+                        checked={persist}
+                    />
+                    Remember this device
+                </label>
             </form>
         </section>
     )
