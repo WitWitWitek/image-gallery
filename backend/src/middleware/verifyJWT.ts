@@ -7,7 +7,7 @@ interface RequestWithUserRole extends Request {
 
 const verifyJWT = (req: RequestWithUserRole, res: Response, next: NextFunction) => {
     const authHeader = (req.headers.Authorization || req.headers.authorization) as string
- 
+    
     if (!authHeader?.startsWith('Bearer ')) {
         return res.status(401).json({message: 'Unauthorized'})
     }
