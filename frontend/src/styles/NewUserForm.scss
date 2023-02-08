@@ -1,0 +1,18 @@
+@use './variables' as *;
+@use './buttons' as *;
+@use './breakpoints' as *;
+@use './inputs' as *;
+
+.signup {
+    display: flex;
+    flex-direction: column;
+
+    &__input {
+        @include inputField;
+    }
+
+    &__btn {
+        @include btn;
+        margin-top: 10px;
+    }
+}

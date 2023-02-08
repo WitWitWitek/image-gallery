@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { useAddNewImageMutation } from './imagesApiSlice';
 import '../../styles/NewImage.scss'
+import useToken from '../../hooks/useToken';
 
 const NewImageForm = () => {
     const [title, setTitle] = useState<string>('')
     const [description, setDescription] = useState<string>('')
     const [selectedFile, setSelectedFile] = useState<string | Blob>('');
-
+    const user = useToken()
     const [addNewImage] = useAddNewImageMutation()
 
     const onTitleChanged = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)
@@ -23,6 +24,7 @@ const NewImageForm = () => {
         formData.append('title', title)
         formData.append('description', description)
         formData.append('file', selectedFile)
+        formData.append('user', user)
         addNewImage(formData)
 	};
 

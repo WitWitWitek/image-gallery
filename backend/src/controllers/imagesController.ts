@@ -1,12 +1,14 @@
 import { RequestHandler } from 'express'
 import { imagekitDeleteHandler, imagekitUploadHandler } from '../lib/imagekit'
 import Image from '../models/Image';
+import User from '../models/User';
 
 interface ImageType {
     imagekitId: string;
     src: string;
     title: string;
     description: string;
+    user: string;
 }
 
 export const getAllImages: RequestHandler = async (req, res, next) => {
@@ -17,6 +19,10 @@ export const getAllImages: RequestHandler = async (req, res, next) => {
 }
 
 export const postImage: RequestHandler = async (req, res, next) => {
+    const userExist = await User.findOne({username: req.body.user}).exec()
+    if (!userExist) {
+        return res.status(401).json({message: 'User doesn\'t exists'})
+    }
     try {
         const result = await imagekitUploadHandler({
             folder: 'images-app',
@@ -28,6 +34,7 @@ export const postImage: RequestHandler = async (req, res, next) => {
             src: result.url,
             title: req.body.title,
             description: req.body.description,
+            user: userExist.username
         }
         await Image.create(imageObj)
         res.status(201).json({message: 'New image successfully created!'})

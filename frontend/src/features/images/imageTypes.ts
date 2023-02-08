@@ -5,4 +5,5 @@ export interface imageProps {
     description: string,
     createdAt: string,
     updatedAt: string,
+    user: string,
 }
