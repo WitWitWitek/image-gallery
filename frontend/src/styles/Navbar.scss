@@ -3,8 +3,9 @@
 @use './breakpoints' as *;
 
 .navbar {
-    color: $lightGreen;
-    background-color: $duskDark;
+    color: $darkSeaBlack;
+    background-color: rgba($popPurple, $alpha: 0.2);
+    border-bottom: 1px solid rgba($white, $alpha: 0.5);;
     grid-row: 1 / 2;
     grid-column: 1 / 2;
     padding: 20px;
@@ -12,13 +13,22 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
+    backdrop-filter: blur(2px);
     
     &__logo {
         position: relative;
         z-index: 101;
+        font-size: 1.3rem;
         a {
-            color: $lightGreen;
+            font-weight: 700;
+            color: $white;
             text-decoration: none;
+        }
+        span {
+            color: $lightRed;
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+            vertical-align: middle;
         }
     }
 

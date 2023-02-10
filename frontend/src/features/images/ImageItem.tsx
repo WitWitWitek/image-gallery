@@ -58,11 +58,11 @@ const ImageItem = ( { imageProps }: ImageItemProps): JSX.Element => {
               onChange={descriptionOnChange}
               maxLength={150}
             />
-            {isEditing && <button onClick={sendEditionHandler}>Send</button>}
+            {isEditing && <button className="image-item__btn" onClick={sendEditionHandler}>Send</button>}
           {user === loggedUser && (
             <div>
-              <button onClick={() => deleteImageHandler(_id)}>delete</button>
-              <button onClick={() => setIsEditing(prev => !prev)}>edit</button>
+              <button className="image-item__btn" onClick={() => deleteImageHandler(_id)}>delete</button>
+              <button className="image-item__btn" onClick={() => setIsEditing(prev => !prev)}>edit</button>
             </div>
           )}
           <div className="image-item__date">{date}</div>

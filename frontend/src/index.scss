@@ -10,11 +10,14 @@
 }
 
 html {
+  font-size: 62.5%;
   font-family: 'Inconsolata', monospace;
 }
 
 body {
-  background-color: rgba($driedGrass, $alpha: 0.4);
+  min-height: 100vh;
+  color: $white;
+  background: $darkSeaBlack;
 }
 
 .app-container {

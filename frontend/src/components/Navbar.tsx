@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import useWindowSize from '../hooks/useWindowSize'
 import { useState } from 'react'
 import Dashboard from './Dashboard'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faImage } from '@fortawesome/free-solid-svg-icons'
 
 const Navbar = () => {
   const { windowSize } = useWindowSize()
@@ -15,6 +17,7 @@ const Navbar = () => {
     <nav className="navbar">
         <div className='navbar__logo'>
           <Link to="/">
+            <span><FontAwesomeIcon icon={faImage}/></span>
             Image-gallery
           </Link>
         </div>

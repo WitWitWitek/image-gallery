@@ -1,17 +1,18 @@
 @use './variables' as *;
 
 @mixin btn(
-    $fcolor: $popPurple,
-    $bgc: $lightGreen,
-    $br-color: $popPurple,
+    $fcolor: $white,
+    $bgc: $lightRed,
+    $br-color: $lightRed,
 ) {
     color: $fcolor;
     background-color: $bgc;
     border: 2px $br-color solid;
+    border-radius: 5px;
     cursor: pointer;
     padding: 5px 10px;
     &:hover {
-        background-color: $popPurple;
+        background-color: $fcolor;
         color: $bgc;
         border: 2px $bgc solid;
     }
