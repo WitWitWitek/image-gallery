@@ -66,7 +66,7 @@ const NewUserForm = () => {
 
     return (
         <form className='signup' onSubmit={handleSubmission}>
-            <label htmlFor="username">Username:</label>
+            <label className='signup__label' htmlFor="username">Username:</label>
             <input 
                 type="text"
                 autoComplete='off' 
@@ -75,7 +75,7 @@ const NewUserForm = () => {
                 onChange={onUsernameChanged}
                 required
             />
-            <label htmlFor="password">Password:</label>
+            <label className='signup__label' htmlFor="password">Password:</label>
             <input 
                 type="password" 
                 id="password"
@@ -83,7 +83,7 @@ const NewUserForm = () => {
                 required
                 className='signup__input'
             />
-            <label htmlFor="passwordRepeat">Repeat password:</label>
+            <label className='signup__label' htmlFor="passwordRepeat">Repeat password:</label>
             <input 
                 type="password" 
                 id="passwordRepeat"

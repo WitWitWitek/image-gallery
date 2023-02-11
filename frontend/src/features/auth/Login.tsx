@@ -36,7 +36,7 @@ const Login = () => {
         <section className='login'>
             <h1>Login:</h1>
             <form className='login__form' onSubmit={handleSubmission}>
-                <label htmlFor="username">Username:</label>
+                <label className='login__label' htmlFor="username">Username:</label>
                 <input
                     id="username"
                     className='login__input' 
@@ -44,7 +44,7 @@ const Login = () => {
                     autoComplete='off'
                     onChange={onUsernameChange}
                 />
-                <label htmlFor="password">Password:</label>
+                <label className='login__label' htmlFor="password">Password:</label>
                 <input
                     id="password"
                     className='login__input' 
@@ -55,7 +55,7 @@ const Login = () => {
 
                 <button className='login__button' type='submit'>{isLoading ? 'Loading...': 'Sign in'}</button>
 
-                <label htmlFor="persist">
+                <label className='login__label' htmlFor="persist">
                     <input 
                         type="checkbox"
                         id='persist'

@@ -2,7 +2,7 @@
 @use './buttons' as *;
 @use './breakpoints' as *;
 @use './inputs' as *;
-
+@use './label' as *;
 .login {
     display: flex;
     flex-direction: column;
@@ -14,11 +14,16 @@
         flex-direction: column;
     }
 
+    &__label {
+        @include inputLabel;
+    }
+
     &__input {
         @include inputField;
     }
 
     &__button {
+        @include inputField;
         @include btn;
         margin-top: 10px;
     }

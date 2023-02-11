@@ -3,7 +3,7 @@ import NewUserForm from "../features/users/NewUserForm"
 const SignUp = () => {
   return (
     <>
-        <div>Sign Up to image-gallery</div>
+        <h2>Sign Up to image-gallery</h2>
         <NewUserForm />
     </>
   )

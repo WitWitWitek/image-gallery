@@ -15,11 +15,13 @@
 }
 
 ::-webkit-scrollbar {
+    position: absolute;
     width: 10px;
     height: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
+    position: fixed;
     background-color: $popPurple;
     border-radius: 10px;
 }
