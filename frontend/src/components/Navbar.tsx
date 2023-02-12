@@ -5,9 +5,11 @@ import { useState } from 'react'
 import Dashboard from './Dashboard'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
+import useToken from '../hooks/useToken'
 
 const Navbar = () => {
   const { windowSize } = useWindowSize()
+  const user = useToken()
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
 
   const menuToggleHandler = () => setIsMenuOpen(prev => !prev)
@@ -24,8 +26,8 @@ const Navbar = () => {
         
         {(windowSize.width && windowSize.width < 768) ? (
           <>
-            <Dashboard isMenuOpen={isMenuOpen} />
-            <button className='navbar__toggle-btn' onClick={menuToggleHandler}>MENU</button>
+            <Dashboard isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+            {user && <button className='navbar__toggle-btn' onClick={menuToggleHandler}>MENU</button>}
           </>
         ) : null}
     </nav>

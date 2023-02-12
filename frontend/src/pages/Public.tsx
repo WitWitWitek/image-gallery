@@ -14,14 +14,6 @@ const Public = () => {
         <p className="public__desc">
           Share images via our platform with friends. Enjoy images collections of all users.    
         </p>
-        <p>
-          <Link to='/login'>
-            <button className="public__btn-login">Login</button>
-            </Link>
-          <Link to='/signup'>
-            <button className="public__btn-signup">Sign up</button>
-          </Link>
-        </p>
       </section>
     </main>
   )

@@ -23,7 +23,7 @@ const ImagesList = () => {
   return (
     <div className="image-list">
       <h2>Images: </h2>
-      <ul>
+      <ul className="image-list__ul">
         {images && images.listOfImgs.map((imageData: imageProps) => (
           <ImageItem 
             key={imageData._id}

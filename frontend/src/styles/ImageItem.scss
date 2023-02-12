@@ -48,7 +48,7 @@
         resize: none;
         @include inputField;
         padding: 0;
-        height: 2.5rem;
+        height: min-content;
         width: 100%;
         font-weight: 700;
         font-size: 2rem;
@@ -90,9 +90,10 @@
 @include md {
     .image-item {
         display: grid;
-        height: 400px;
-        grid-template-columns: 65% 35%;
+        height: 300px;
+        grid-template-columns: 50% 50%;
         grid-template-rows: 1fr;
+        margin: 0;
 
         &__image-container {
             grid-column: 1 / 2;
@@ -101,21 +102,20 @@
 
         &__image {
             position: relative;
-            max-width: 100%;
+            min-height: 100%;
         }
 
         &__wrapper {
             grid-column: 2 / 3;
             height: 100%;
-            justify-content: space-evenly;
+            justify-content: space-between;
         }
 
         &__title {
             font-size: 2.8rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             height: 20%;
+            overflow: hidden;
+            height: min-content;
             &:disabled {
                 word-wrap: break-word;
             }
@@ -126,12 +126,12 @@
             padding: 0;
             font-weight: 200;
             border: none;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             background-color: transparent;
             max-width: 100%;
             min-width: 100%;
-            min-height: 40%;
-            max-height: 40%;
+            min-height: 45%;
+            max-height: 45%;
             resize: none;
             overflow-wrap: break-word;
             text-align: justify;
@@ -139,7 +139,7 @@
         }
     
         &__date {
-            font-size: 16px;
+            font-size: 1.4rem;
         }
     }
 }

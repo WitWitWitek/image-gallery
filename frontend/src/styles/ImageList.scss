@@ -10,7 +10,17 @@
         list-style: none;
         display: flex;
         flex-direction: column;
-        flex-wrap: wrap;
+    }
+}
+
+@include md {
+    .image-list {
+        &__ul {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
     }
 }
 
