@@ -4,9 +4,12 @@
 @use './inputs' as *;
 @use './label' as *;
 .signup {
-    display: flex;
-    flex-direction: column;
-
+    width: 100%;
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+    
     &__label {
         @include inputLabel;
     }
@@ -19,5 +22,6 @@
         @include inputField;
         @include btn;
         margin-top: 10px;
+        font-weight: 700;
     }
 }

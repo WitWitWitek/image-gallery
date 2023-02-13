@@ -1,9 +1,23 @@
 import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
+import useWindowSize from "../hooks/useWindowSize"
 import '../styles/Public.scss'
 
 const Public = () => {
+  const { windowSize } = useWindowSize()
+
+  const authButtons = (
+    <p>
+          <Link to='/login'>
+            <button className="public__btn-login">Login</button>
+            </Link>
+          <Link to='/signup'>
+            <button className="public__btn-signup">Sign up</button>
+          </Link>
+    </p>
+  )
+
   return (
     <main className="public">
       <header className="public__header">
@@ -14,6 +28,7 @@ const Public = () => {
         <p className="public__desc">
           Share images via our platform with friends. Enjoy images collections of all users.    
         </p>
+        {windowSize.width && windowSize.width < 768 && authButtons}
       </section>
     </main>
   )

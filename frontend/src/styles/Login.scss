@@ -22,9 +22,26 @@
         @include inputField;
     }
 
+    &__linkto {
+        @include inputLabel;
+        font-size: 1.2rem;
+        text-align: center;
+        margin-top: 2rem;
+        a {
+            text-decoration: none;
+            color: $lightRed;
+            padding: 0.3rem;
+            &:hover {
+                background-color: $white;
+                border-radius: 5px
+            }
+        }
+    }
+
     &__button {
         @include inputField;
         @include btn;
         margin-top: 10px;
+        font-weight: 700;
     }
 }

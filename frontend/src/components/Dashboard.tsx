@@ -9,10 +9,15 @@ import Login from '../features/auth/Login';
 import NewUserForm from '../features/users/NewUserForm';
 import useWindowSize from '../hooks/useWindowSize';
 import Welcome from './Welcome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRightToFile, faArrowLeftLong } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom';
+
 interface DashboardProps {
     isMenuOpen?: boolean;
     setIsMenuOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 const Dashboard = ({ isMenuOpen, setIsMenuOpen }: DashboardProps) => {
   const { windowSize } = useWindowSize()
   const [isAddingNew, setIsAddingNew] = useState<boolean>(false)
@@ -39,20 +44,20 @@ const Dashboard = ({ isMenuOpen, setIsMenuOpen }: DashboardProps) => {
   }, [isSuccess, navigate])
 
   const basicLayout = (
-      <ul>
-        <li className='dashboard__item'>Your profile</li>
-        <li className='dashboard__item'>Your gallery</li>
-        <li className='dashboard__item' onClick={() => setIsAddingNew(true)}>Add New</li>
+      <>
         <li className='dashboard__user'>
-        {user ? <div>User: {user}</div> : null}
-        <button className='dashboard__button' onClick={logoutHandler}>{isLoading ? 'Logging Out...' : 'Logout' }</button>
+          {user ? <p>User: {user}</p> : null}
         </li>
-      </ul>
+        <li className='dashboard__item'><Link to={`/user/${user}/user-gallery`}>Your gallery </Link></li>
+        <li className='dashboard__item'><Link to={`/user/${user}/user-profile`}>Your profile </Link></li>
+        <li className='dashboard__item' onClick={() => setIsAddingNew(true)}>Add New <FontAwesomeIcon icon={faArrowRightToFile} /></li>
+        <button className='dashboard__button' onClick={logoutHandler}>{isLoading ? 'Logging Out...' : 'Logout' }</button>
+      </>
   )
 
   const addingNewImage = (
     <>
-      <button onClick={() => setIsAddingNew(false)}>go back</button>
+      <button className='dashboard__button' onClick={() => setIsAddingNew(false)}><FontAwesomeIcon icon={faArrowLeftLong}/> go back</button>
       <NewImageForm />
     </>
   )

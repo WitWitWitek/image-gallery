@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCreateNewUserMutation } from './usersApiSlice'
+import { Link } from 'react-router-dom'
 import '../../styles/NewUserForm.scss'
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,20}$/;
@@ -65,37 +66,41 @@ const NewUserForm = () => {
     const onPasswordRepeatChanged = (e: React.ChangeEvent<HTMLInputElement>) => setPasswordRepat(e.target.value)
 
     return (
-        <form className='signup' onSubmit={handleSubmission}>
-            <label className='signup__label' htmlFor="username">Username:</label>
-            <input 
-                type="text"
-                autoComplete='off' 
-                id="username"
-                className='signup__input'
-                onChange={onUsernameChanged}
-                required
-            />
-            <label className='signup__label' htmlFor="password">Password:</label>
-            <input 
-                type="password" 
-                id="password"
-                onChange={onPasswordChanged}
-                required
-                className='signup__input'
-            />
-            <label className='signup__label' htmlFor="passwordRepeat">Repeat password:</label>
-            <input 
-                type="password" 
-                id="passwordRepeat"
-                className='signup__input'
-                onChange={onPasswordRepeatChanged}
-                required
-            />
-            <button type="submit" className='signup__btn'>Sign up</button>
-            {validationError && (
-                <p>{validationError}</p>
-            )}
-        </form>
+        <section className='signup'>
+            <h2 className='signup__label'>Sign up to image-gallery:</h2>
+            <form className='signup__form'onSubmit={handleSubmission}>
+                <label className='signup__label' htmlFor="username">Username:</label>
+                <input 
+                    type="text"
+                    autoComplete='off' 
+                    id="username"
+                    className='signup__input'
+                    onChange={onUsernameChanged}
+                    required
+                />
+                <label className='signup__label' htmlFor="password">Password:</label>
+                <input 
+                    type="password" 
+                    id="password"
+                    onChange={onPasswordChanged}
+                    required
+                    className='signup__input'
+                />
+                <label className='signup__label' htmlFor="passwordRepeat">Repeat password:</label>
+                <input 
+                    type="password" 
+                    id="passwordRepeat"
+                    className='signup__input'
+                    onChange={onPasswordRepeatChanged}
+                    required
+                />
+                <button type="submit" className='signup__btn'>Sign up</button>
+                {validationError && (
+                    <p>{validationError}</p>
+                )}
+            </form>
+            <p className='login__linkto'>Already have an account? <Link to='/login'>Log in</Link></p>
+        </section>
     )
 }
 

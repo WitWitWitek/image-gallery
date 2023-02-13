@@ -3,7 +3,7 @@ import '../../styles/Login.scss'
 import { useLoginMutation } from './authApiSlice'
 import { useDispatch } from 'react-redux'
 import { setCredentials } from './authSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import usePersist from '../../hooks/usePersist'
 
 const Login = () => {
@@ -34,7 +34,7 @@ const Login = () => {
 
     return (
         <section className='login'>
-            <h1>Login:</h1>
+            <h1 className='login__label'>Login:</h1>
             <form className='login__form' onSubmit={handleSubmission}>
                 <label className='login__label' htmlFor="username">Username:</label>
                 <input
@@ -65,6 +65,7 @@ const Login = () => {
                     Remember this device
                 </label>
             </form>
+            <p className='login__linkto'>No account yet? <Link to='/signup'>Sign up</Link></p>
         </section>
     )
 }
