@@ -1,13 +1,16 @@
-import { Link } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 import useWindowSize from "../hooks/useWindowSize"
 import '../styles/Public.scss'
+import useToken from "../hooks/useToken"
 
 const Public = () => {
   const { windowSize } = useWindowSize()
+  const user = useToken()
 
   const authButtons = (
+          
     <p>
           <Link to='/login'>
             <button className="public__btn-login">Login</button>
@@ -18,6 +21,8 @@ const Public = () => {
     </p>
   )
 
+  if (user) return <Navigate to={'/dashboard'} />
+  
   return (
     <main className="public">
       <header className="public__header">

@@ -19,6 +19,10 @@
     transition: transform ease .2s;
     list-style: none;
     padding: 1rem;
+    
+    li {
+        width: 100%;
+    }
 
     &.isMenuActive {
         transform: translateX(0%);
@@ -26,15 +30,13 @@
 
     &__item {
         @include btn;
+        display: block;
         margin: 1rem 0;
         width: 100%;
         font-weight: 700;
         font-size: 1.4rem;
         text-align: center;
-        a {
-            text-decoration: none;
-            @include btn(inherit, ihnerit, inherit);
-        }
+        text-decoration: none;
     }
     
     &__user {

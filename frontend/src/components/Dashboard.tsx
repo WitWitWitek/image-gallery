@@ -48,8 +48,8 @@ const Dashboard = ({ isMenuOpen, setIsMenuOpen }: DashboardProps) => {
         <li className='dashboard__user'>
           {user ? <p>User: {user}</p> : null}
         </li>
-        <li className='dashboard__item'><Link to={`/user/${user}/user-gallery`}>Your gallery </Link></li>
-        <li className='dashboard__item'><Link to={`/user/${user}/user-profile`}>Your profile </Link></li>
+        <li><Link className='dashboard__item' to={`/user/${user}/user-gallery`}>Your gallery </Link></li>
+        <li><Link className='dashboard__item' to={`/user/${user}/user-profile`}>Your profile </Link></li>
         <li className='dashboard__item' onClick={() => setIsAddingNew(true)}>Add New <FontAwesomeIcon icon={faArrowRightToFile} /></li>
         <button className='dashboard__button' onClick={logoutHandler}>{isLoading ? 'Logging Out...' : 'Logout' }</button>
       </>
