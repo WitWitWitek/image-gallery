@@ -3,10 +3,17 @@ import { apiSlice } from "../../app/api/apiSlice";
 interface SignUpRequest {
     username: string,
     password: string,
+    newPassword?: string,
 }
 
 interface SignUpResponse {
     message: string
+    error?: {
+        data: {
+            message: string
+        },
+        status: number
+    }
 }
 
 export const usersApi = apiSlice.injectEndpoints({
@@ -22,11 +29,20 @@ export const usersApi = apiSlice.injectEndpoints({
                 body: {...credentials}
             }),
             invalidatesTags: ['User']
+        }),
+        changeUserPassword: builder.mutation<SignUpResponse, SignUpRequest>({
+            query: (credentials) => ({
+                url: '/users/change-password',
+                method: 'PATCH',
+                body: {...credentials}
+            }),
+            invalidatesTags: ['User']
         })
     })
 })
 
 export const {
     useGetUsersQuery,
-    useCreateNewUserMutation
+    useCreateNewUserMutation,
+    useChangeUserPasswordMutation
 } = usersApi;

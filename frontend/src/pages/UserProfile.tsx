@@ -9,10 +9,9 @@ const UserProfile = () => {
     if (params.userId !== user) return <Navigate to='/dashboard' replace={true} />
     // this page is resctrited to logged in user, only user can watch this
     return (
-        <>
-            {params.userId}
+        <div>
             <ChangePasswordForm />
-        </>
+        </div>
     )
 }
 

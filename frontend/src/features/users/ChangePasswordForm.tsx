@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useChangeUserPasswordMutation } from './usersApiSlice';
 import '../../styles/NewUserForm.scss'
+import useToken from '../../hooks/useToken';
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%.]).{8,24}$/;
 
 const ChangePasswordForm = () => {
+    const username = useToken()
     const [currentPassword, setCurrentPassword] = useState<string>('')
     const [newPassword, setNewPassword] = useState<string>('')
     const [newPasswordRepeat, setNewPasswordRepeat] = useState<string>('')
@@ -11,9 +14,36 @@ const ChangePasswordForm = () => {
     const [validPassword, setValidPassword] = useState<boolean>(false)
     const [validationError, setValidationError] = useState<string>('')
 
-    const handleSubmission = () => {
-        
+    const [changeUserPassword, {
+        isSuccess,
+        isError,
+        error
+    }] = useChangeUserPasswordMutation()
+ 
+    const canSave = currentPassword.trim() !== '' && validPassword && passwordsMatch
+
+    const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        if (!canSave) {
+            setValidationError('All fields are required!')
+        } 
+        await changeUserPassword({
+            username,
+            password: currentPassword,
+            newPassword
+        }).unwrap()
     }
+
+    useEffect(() => {
+        setCurrentPassword('')
+        setNewPassword('')
+        setNewPasswordRepeat('')
+    }, [isSuccess])
+
+    useEffect(() => {
+        setValidPassword(PASSWORD_REGEX.test(newPassword))
+        setPasswordsMatch(newPassword === newPasswordRepeat)
+    }, [newPassword, newPasswordRepeat])
 
     const onCurrentPasswordChanged = (e: React.ChangeEvent<HTMLInputElement>) => setCurrentPassword(e.target.value)
     const onNewPasswordChanged = (e: React.ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value)
@@ -33,7 +63,7 @@ const ChangePasswordForm = () => {
                         required
                     />
                     <label className='signup__label' htmlFor="newPassword">New password:</label>
-                    <input 
+                    <input
                         type="password" 
                         id="newPassword"
                         onChange={onNewPasswordChanged}
