@@ -2,8 +2,19 @@
 @use './buttons' as *;
 @use './breakpoints' as *;
 
+.image-list {
+    h2 {
+        font-size: 2.5rem;
+        padding: 1.5rem;
+    }
+}
+
 @include sm {
     .image-list {
+        h2 {
+            font-size: 2.7rem;
+        }
+
         width: 100%;
         min-height: 100vh;
         padding: 0 15px;
@@ -15,6 +26,10 @@
 
 @include md {
     .image-list {
+        h2 {
+            font-size: 3.5rem;
+        }
+
         &__ul {
             display: grid;
             grid-template-columns: repeat(2, 1fr);

@@ -1,19 +1,16 @@
 import { useSelector } from "react-redux"
-import { Outlet } from "react-router-dom"
-import usePersist from "../../hooks/usePersist"
+import { Navigate, Outlet } from "react-router-dom"
 import { useRefreshMutation } from "./authApiSlice"
 import { selectCurrentToken } from "./authSlice"
 import { useState, useEffect, useRef } from 'react'
 
 const PersistLogin = () => {
     const effectRan = useRef(false)
-    const [persist] = usePersist()
     const token = useSelector(selectCurrentToken)
 
     const [trueSuccess, setTrueSuccess] = useState<boolean>(false)
 
     const [refresh, {
-        isUninitialized,
         isLoading,
         isSuccess,
         isError,
@@ -31,7 +28,7 @@ const PersistLogin = () => {
               console.log(err)
           }
         }
-        if (!token && persist) verifyRefreshToken()
+        if (!token) verifyRefreshToken()
       }
       return () => {
         effectRan.current = true
@@ -39,10 +36,10 @@ const PersistLogin = () => {
       // eslint-disable-next-line
     }, [])
     
-    if (!persist) return <Outlet />
     if (isLoading) return <p>Loading...</p>
-    if (isError) return <p>Error occured...</p>
-    if (token && isUninitialized) return <Outlet />
+    if (isError) return <Navigate to='/login' />
+    if (token) return <Outlet />
+    
     return (
       <>
         {isSuccess && trueSuccess && (<Outlet />)}

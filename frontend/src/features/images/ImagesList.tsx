@@ -2,9 +2,10 @@ import ImageItem from "./ImageItem"
 import { useGetImagesQuery } from "./imagesApiSlice"
 import { imageProps } from "./imageTypes"
 import '../../styles/ImageList.scss'
+import { Navigate, useLocation } from "react-router-dom"
 
 const ImagesList = () => {
-
+  const location = useLocation()
   const {
     data: images,
     isLoading,
@@ -18,7 +19,7 @@ const ImagesList = () => {
   })
   
   if (isLoading) return <p>Loading...</p>
-  if (isError) return <p>Error occured...</p>
+  if (isError) return <Navigate to='/login' state={{ from: location }} replace={true} />
 
   return (
     <div className="image-list">

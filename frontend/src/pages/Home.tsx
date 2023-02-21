@@ -6,7 +6,6 @@ const Home = () => {
   const { windowSize } = useWindowSize()
   return (
     <>
-      <h2>What's new?</h2>
       {(windowSize.width && windowSize.width < 768) && <NewImageForm />}
       <ImagesList />
     </>

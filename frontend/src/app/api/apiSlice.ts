@@ -26,7 +26,6 @@ const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
 
             result = await baseQuery(args, api, extraOptions)
         } else {
-
             if (refreshResult?.error?.status === 403) {
                 (refreshResult.error.data as {message: string}).message = "Your login has expired. "
             }

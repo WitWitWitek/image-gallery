@@ -1,9 +1,7 @@
 import express from "express";
 import { createNewUser, getAllUsers, updateUserPassword } from "../controllers/usersController";
 const router = express.Router()
-// import verifyJWT from "../middleware/verifyJWT";
-
-// router.use(verifyJWT)
+import verifyJWT from "../middleware/verifyJWT";
 
 router
     .route('/')
@@ -12,6 +10,6 @@ router
 
 router
     .route('/change-password')
-    .patch(updateUserPassword)
+    .patch(verifyJWT, updateUserPassword)
 
 export default router

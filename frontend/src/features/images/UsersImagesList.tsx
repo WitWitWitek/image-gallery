@@ -1,9 +1,11 @@
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import ImageItem from './ImageItem'
 import { useGetImagesQuery } from './imagesApiSlice'
 import { imageProps } from './imageTypes'
+import { useLocation } from 'react-router-dom'
 
 const UsersImagesList = () => {
+    const location = useLocation()
     const params = useParams()
     const { 
         data: images,
@@ -18,7 +20,7 @@ const UsersImagesList = () => {
 
     let userImages = null
     if (isLoading) return <p>Loading...</p>
-    if (isError) return <p>Error occured...</p>
+    if (isError) return <Navigate to='/login' state={{ from: location }} replace={true} />
 
     if (isSuccess && images) {
         const filteredUserImages = images.listOfImgs.filter((image: imageProps) => image.user === params.userId)
