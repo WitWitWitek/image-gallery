@@ -2,17 +2,22 @@ import User from "../models/User";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { RequestHandler } from 'express'
+import asyncHandler from 'express-async-handler';
 
 export const login: RequestHandler = async (req, res, next) => {
     const { username, password } = req.body
     if (!username || !password) {
-        return res.status(400).json({ message: 'All credentials are required' })
+        res.status(400).json({ message: 'All credentials are required' })
+        return;
     }
 
     const foundUser = await User.findOne({ username })
     const passwordsMatch = await bcrypt.compare(password, foundUser!.password)
 
-    if (!passwordsMatch) return res.status(401).json({ message: 'Unathorized'})
+    if (!passwordsMatch) {
+        res.status(401).json({ message: 'Unathorized'})
+        return;
+    }
 
     const accessToken = jwt.sign(
         {
@@ -38,11 +43,14 @@ export const login: RequestHandler = async (req, res, next) => {
     })
 
     res.json({ accessToken })
-} 
+}
 
-export const refresh: RequestHandler = async (req, res, next) => {
+export const refresh: RequestHandler = asyncHandler(async (req, res, next) => {
     const cookies = req.cookies
-    if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized' })
+    if (!cookies?.jwt) {
+        res.status(401).json({ message: 'Unauthorized' })
+        return;
+    }
 
     const refreshToken = cookies.jwt
 
@@ -70,11 +78,14 @@ export const refresh: RequestHandler = async (req, res, next) => {
             res.json({ accessToken })
         })
     )
-} 
+}) 
 
-export const logut: RequestHandler = async (req, res, next) => {
+export const logut: RequestHandler = asyncHandler(async (req, res, next) => {
     const cookies = req.cookies
-    if (!cookies?.jwt) return res.sendStatus(204)
+    if (!cookies?.jwt) {
+        res.sendStatus(204)
+        return;
+    }
     res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true })
     res.json({ message: 'Cookie cleared' })
-} 
+}) 

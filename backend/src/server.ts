@@ -10,6 +10,7 @@ import multer from 'multer';
 import connectMongoDb from './lib/connectMongoDb';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser'
+import { errorHandler } from './middleware/errorHandler';
 const app = express()
 
 mongoose.set('strictQuery', false);
@@ -34,6 +35,7 @@ app.all('*', (req: Request, res: Response) => {
     }
 })
 
+app.use(errorHandler)
 
 mongoose.connection.once('open', () => {
     console.log('MongoDb connected...');

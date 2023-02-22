@@ -5,7 +5,15 @@
 .image-list {
     h2 {
         font-size: 2.5rem;
-        padding: 1.5rem;
+        padding: 1.2rem;
+    }
+
+    &__refetch-btn {
+        @include btn;
+        margin: 1rem 0;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        width: 100%;
     }
 }
 

@@ -3,7 +3,7 @@ import { apiSlice } from '../../app/api/apiSlice'
 export const imagesApi = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getImages: builder.query({
-                query: () => '/images',
+                query: (page = 1) => `/images?page=${page}`,
                 providesTags: ['Image']
             }),
         addNewImage: builder.mutation({

@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express'
+import { RequestHandler, Request, Response, NextFunction } from 'express'
 import { imagekitDeleteHandler, imagekitUploadHandler } from '../lib/imagekit'
 import Image from '../models/Image';
 import User from '../models/User';
@@ -12,8 +12,13 @@ interface ImageType {
 }
 
 export const getAllImages: RequestHandler = asyncHandler(async (req, res, next) => {
-    const listOfImgs = await Image.find()
-    res.json({ listOfImgs })
+    const page = +req.query.page! || 1
+    const imgsCount = await Image.count()
+    const imgsPerPage = 4
+
+
+    const listOfImgs = await Image.find().sort({ "createdAt": -1} ).limit(imgsPerPage * page)
+    res.json({ listOfImgs, imgsCount })
     // REFACTOR NEEDED
     // zmienić array zeby nie dawalo id imageId
 })
@@ -21,26 +26,23 @@ export const getAllImages: RequestHandler = asyncHandler(async (req, res, next) 
 export const postImage: RequestHandler = asyncHandler(async (req, res, next) => {
         const userExist = await User.findOne({username: req.body.user}).exec()
         if (!userExist) {
-            return res.status(401).json({message: 'User doesn\'t exists'})
+            res.status(401).json({message: 'User doesn\'t exists'})
+            return;
         }
-        try {
-            const result = await imagekitUploadHandler({
+        const result = await imagekitUploadHandler({
                 folder: 'images-app',
                 file: req.file?.buffer as Buffer, 
                 fileName : req.file?.originalname as string
             })
-            const imageObj: ImageType = {
+        const imageObj: ImageType = {
                 imagekitId: result.fileId,
                 src: result.url,
                 title: req.body.title,
                 description: req.body.description,
                 user: userExist.username
             }
-            await Image.create(imageObj)
-            res.status(201).json({message: 'New image successfully created!'})
-        } catch (err) {
-            console.log(err)
-        }
+        await Image.create(imageObj)
+        res.status(201).json({message: 'New image successfully created!'})
     }
 )
 
@@ -49,14 +51,15 @@ export const updateImage: RequestHandler = asyncHandler(async (req, res, next) =
         const { updatedTitle, updatedDescription } = req.body;
         const image = await Image.findOne({_id: imageId})
         if (!image) {
-            return res.status(404).json({message: "Image doesn't exists."})
+            res.status(404).json({message: "Image doesn't exists."})
+            return;
         }
         image.title = updatedTitle;
         image.description = updatedDescription;
         image.save()
         res.status(201).json({message: "Image data succesfully updated!"})
-    }
-)
+})
+
 
 
 export const deleteImage: RequestHandler = asyncHandler(async (req, res, next) => {

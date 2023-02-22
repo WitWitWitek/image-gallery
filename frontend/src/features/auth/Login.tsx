@@ -5,6 +5,13 @@ import { useDispatch } from 'react-redux'
 import { setCredentials } from './authSlice'
 import { Link, useNavigate } from 'react-router-dom'
 
+interface error {
+    data: {
+        message: string
+    },
+    status: number
+}
+
 const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -24,7 +31,7 @@ const Login = () => {
             setPassword('')
             navigate('/dashboard')
         } catch (err) {
-            console.log(err);
+            console.log((err as error).data.message);
             navigate('/login')
         }
     }
