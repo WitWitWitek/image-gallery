@@ -12,10 +12,19 @@ export const login: RequestHandler = async (req, res, next) => {
     }
 
     const foundUser = await User.findOne({ username })
+    if (!foundUser) {
+        res.status(401).json({ message: 'User does not exist'})
+        return;
+    }
+    
     const passwordsMatch = await bcrypt.compare(password, foundUser!.password)
-
     if (!passwordsMatch) {
-        res.status(401).json({ message: 'Unathorized'})
+        res.status(401).json({ message: 'Unathorized. Invalid Password.'})
+        return;
+    }
+
+    if (!foundUser.confirmed) {
+        res.status(401).json({ message: 'User not confirmed!'})
         return;
     }
 
@@ -48,7 +57,7 @@ export const login: RequestHandler = async (req, res, next) => {
 export const refresh: RequestHandler = asyncHandler(async (req, res, next) => {
     const cookies = req.cookies
     if (!cookies?.jwt) {
-        res.status(401).json({ message: 'Unauthorized' })
+        res.status(401).json({ message: 'Unauthorized.' })
         return;
     }
 

@@ -17,8 +17,8 @@ const verifyJWT = (req: RequestWithUserRole, res: Response, next: NextFunction) 
     jwt.verify(
         token,
         process.env.ACCESS_TOKEN_SECRET as string,
-        (err, decoded: any) => {
-            if (err) return res.status(401).json({message: 'Forbidden'})
+        (err: any, decoded: any) => {
+            if (err) return res.status(401).clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true }).json({message: 'Forbidden'})
             req.user = decoded.UserInfo.username;
             next()
         }
