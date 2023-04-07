@@ -4,11 +4,12 @@ import Dashboard from "./Dashboard"
 import Navbar from "./Navbar"
 
 const Layout = () => {
-  const { windowSize } = useWindowSize()
+  const windowSize = useWindowSize()
+  
   return (
     <main className="app-container">
       <Navbar />
-      {(windowSize.width && windowSize.width > 768) && <Dashboard />}
+      {(windowSize > 768) && <Dashboard />}
       <div className="content-container">
         <Outlet />
       </div>

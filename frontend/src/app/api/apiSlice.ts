@@ -1,6 +1,6 @@
 import { BaseQueryFn, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { RootState } from '../store';
-import { setCredentials } from '../../features/auth/authSlice';
+import { setCredentials, logOut } from '../../features/auth/authSlice';
 
 
 const baseQuery = fetchBaseQuery({
@@ -28,11 +28,11 @@ const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
         } else {
             if (refreshResult?.error?.status === 403) {
                 (refreshResult.error.data as {message: string}).message = "Your login has expired. "
+                api.dispatch(logOut())
             }
             return refreshResult
         }
     }
-
     return result
 }
 

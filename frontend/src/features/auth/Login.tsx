@@ -1,23 +1,24 @@
-import React, { useState } from 'react'
-import '../../styles/Login.scss'
+import React, { useState  } from 'react'
+import '../../styles/Forms.scss'
 import { useLoginMutation } from './authApiSlice'
 import { useDispatch } from 'react-redux'
 import { setCredentials } from './authSlice'
 import { Link, useNavigate } from 'react-router-dom'
+import { isErrorWithMessage, IError } from '../../lib/fetchErrorHelper'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleExclamation, faEye, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 
-interface error {
-    data: {
-        message: string
-    },
-    status: number
-}
+
 
 const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const [login, { isLoading }] = useLoginMutation()
+    const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
+    const [loginError, setLoginError] = useState<IError>()
+
+    const [login, { isSuccess, isLoading, isError }] = useLoginMutation()
 
     const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)
     const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)
@@ -31,35 +32,56 @@ const Login = () => {
             setPassword('')
             navigate('/dashboard')
         } catch (err) {
-            console.log((err as error).data.message);
-            navigate('/login')
+            if (isErrorWithMessage(err)) {
+                setLoginError(err)
+            }
+            navigate('/login') 
         }
     }
 
     return (
-        <section className='login'>
-            <h1 className='login__label'>Login:</h1>
-            <form className='login__form' onSubmit={handleSubmission}>
-                <label className='login__label' htmlFor="username">Username:</label>
-                <input
-                    id="username"
-                    className='login__input' 
-                    type="text" 
-                    autoComplete='off'
-                    onChange={onUsernameChange}
-                />
-                <label className='login__label' htmlFor="password">Password:</label>
-                <input
-                    id="password"
-                    className='login__input' 
-                    type="password" 
-                    autoComplete='off'
-                    onChange={onPasswordChange}
-                />
-
-                <button className='login__button' type='submit'>{isLoading ? 'Loading...': 'Sign in'}</button>
+        <section className='form-section'>
+            <h2 className='form-section__title'>Login:</h2>
+            <form className='form-section__form' onSubmit={handleSubmission}>
+                <label className='form-section__label' htmlFor="username">
+                    Username:
+                    <input
+                        id="username"
+                        className='form-section__input' 
+                        type="text" 
+                        onChange={onUsernameChange}
+                        required
+                    />
+                </label>
+                <label className='form-section__label' htmlFor="password">
+                    Password:
+                    <input
+                        id="password"
+                        className='form-section__input' 
+                        type={isPasswordVisible ? "text" : "password"} 
+                        autoComplete='off'
+                        onChange={onPasswordChange}
+                        required
+                    />
+                    <button type="button" className='form-section__password-button' onClick={() => setIsPasswordVisible(prev => !prev)}>
+                            <FontAwesomeIcon icon={faEye} />
+                    </button>
+                </label>
+                <button className='form-section__button' type='submit' disabled={isLoading}>{isLoading ? 'Loading...': 'Sign in'}</button>
             </form>
-            <p className='login__linkto'>No account yet? <Link to='/signup'>Sign up</Link></p>
+            <p className='form-section__linkto'>No account yet? <Link to='/signup' className='form-section__button'>Sign up</Link></p>
+            {isError && 
+                <div className='form-section__error'>
+                    <p className='form-section__error-paragraph'><FontAwesomeIcon icon={faCircleExclamation} /> {loginError?.data.message}</p>
+                    <p className='form-section__error-paragraph'>Is your account unconfirmed?</p>
+                    <p className='form-section__error-paragraph'>Resend verification <Link to='/resend-email' className="public__btn-login">e-mail</Link></p>
+                </div>
+            }
+            {isSuccess && 
+                <div className='form-section__success'>
+                    <p className='form-section__success-paragraph'><FontAwesomeIcon icon={faCircleCheck} /> User successfully logged in.</p>
+                </div>
+            }
         </section>
     )
 }

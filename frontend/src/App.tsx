@@ -9,16 +9,20 @@ import RequireAuth from './features/auth/RequireAuth'
 import NewUserForm from './features/users/NewUserForm'
 import UserGallery from './pages/UserGallery'
 import UserProfile from './pages/UserProfile'
+import UserConfirmation from './features/users/UserConfirmation'
+import ResendEmailForm from './features/users/ResendEmailForm'
 
 const App = () => {
-    const { windowSize } = useWindowSize()
+    const windowSize = useWindowSize()
     let publicRoutesToRender;
-    if (windowSize.width && windowSize.width > 768) {
+    if (windowSize > 768) {
         publicRoutesToRender = (
             <>
                 <Route index element={<Public />} />
                 <Route path="login" element={<Public />} />
                 <Route path='signup' element={<Public />} />
+                <Route path='confirmation/:emailToken' element={<Public />} />
+                <Route path='resend-email' element={<Public />} />
             </>
         )
     } else {
@@ -27,6 +31,8 @@ const App = () => {
                 <Route index element={<Public />} />
                 <Route path="login" element={<Login />} />
                 <Route path='signup' element={<NewUserForm />} />
+                <Route path='confirmation/:emailToken' element={<UserConfirmation />} />
+                <Route path='resend-email' element={<ResendEmailForm />} />
             </>
         )
     }

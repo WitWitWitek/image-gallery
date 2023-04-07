@@ -5,7 +5,7 @@ import { selectCurrentToken } from "./authSlice"
 import { useState, useEffect, useRef } from 'react'
 
 const PersistLogin = () => {
-    const effectRan = useRef(false)
+    const effectRan = useRef<boolean>(false)
     const token = useSelector(selectCurrentToken)
 
     const [trueSuccess, setTrueSuccess] = useState<boolean>(false)
@@ -14,9 +14,7 @@ const PersistLogin = () => {
         isLoading,
         isSuccess,
         isError,
-        // error
-    }] = useRefreshMutation()
-
+    }] = useRefreshMutation()   
 
     useEffect(() => {
       if (effectRan.current === true) {

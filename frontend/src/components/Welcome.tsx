@@ -7,7 +7,7 @@ const Welcome = () => {
         <p>
           <Link to='/login'>
             <button className="public__btn-login">Login</button>
-            </Link>
+          </Link>
           <Link to='/signup'>
             <button className="public__btn-signup">Sign up</button>
           </Link>

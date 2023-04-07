@@ -1,21 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useAddNewImageMutation } from './imagesApiSlice';
-import '../../styles/NewImage.scss'
 import useToken from '../../hooks/useToken';
+import { isErrorWithMessage } from '../../lib/fetchErrorHelper';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleExclamation, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 
 const NewImageForm = () => {
+    const user = useToken()
+
     const [title, setTitle] = useState<string>('')
     const [description, setDescription] = useState<string>('')
     const [selectedFile, setSelectedFile] = useState<string | Blob>('');
-    const user = useToken()
-    const [addNewImage, {isSuccess}] = useAddNewImageMutation()
+
+    const [errMessage, setErrMessage] = useState<string>('')
+
+    const [addNewImage, { isSuccess, isError, isLoading }] = useAddNewImageMutation()
     const fileInputRef = useRef<any>()
 
     const onTitleChanged = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)
     const onDescriptionChanged = (e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)
     const onFileChanged = (event: React.BaseSyntheticEvent) => setSelectedFile(event.target.files[0])
 	
-    const handleSubmission = (e: React.SyntheticEvent) => {
+    const handleSubmission = async (e: React.SyntheticEvent) => {
         e.preventDefault()
         if (!title || !description || !selectedFile) {
             alert('fill in all inputs')
@@ -26,7 +32,13 @@ const NewImageForm = () => {
         formData.append('description', description)
         formData.append('file', selectedFile)
         formData.append('user', user)
-        addNewImage(formData)
+        try {
+            await addNewImage(formData).unwrap()
+        } catch (err) {
+            if (isErrorWithMessage(err)) {
+                setErrMessage(err.data.message)
+            }
+        }
 	};
 
     useEffect(() => {
@@ -41,40 +53,75 @@ const NewImageForm = () => {
     // handle error classes when css will be aplied
 
   return(
-       <form onSubmit={handleSubmission} className='new-image'>
-            <label htmlFor="title" className='new-image__label'>Title:</label>
-            <input 
-                className='new-image__input'
-                id='title'
-                name='title'
-                autoComplete='off'
-                type="text"
-                value={title}
-                onChange={onTitleChanged}
-                maxLength={20} 
-            />
-            <label htmlFor="description" className='new-image__label'>Description:</label>
-            <textarea 
-                className='new-image__textarea'
-                id='description'
-                name='description'
-                autoComplete='off'
-                value={description}  
-                onChange={onDescriptionChanged}
-                maxLength={150}
-            ></textarea>
-            <label htmlFor="file" className='new-image__label'>Image:</label>
-            <input
-                className='new-image__file-input'
-                id='file' 
-                type="file" 
-                name="file" 
-                onChange={onFileChanged} 
-                accept='image/png, image/jpeg, image/jpg'
-                ref={fileInputRef}
-            />
-            <button type="submit" className='new-image__submit-button'>Submit</button>
-       </form>
+        <section className="form-section">
+            <h2 className='form-section__title'>Add new image:</h2>
+            <form onSubmit={handleSubmission} className='form-section__form'>
+                <label htmlFor="title" className='form-section__label'>
+                    Title:
+                    <input 
+                        className='form-section__input'
+                        id='title'
+                        name='title'
+                        autoComplete='off'
+                        type="text"
+                        value={title}
+                        onChange={onTitleChanged}
+                        maxLength={20} 
+                    />
+                    {!title && (
+                        <p className='form-section__note'>
+                            1 to 20 characters.
+                        </p>
+                    )}
+                </label>  
+                <label htmlFor="description" className='form-section__label'>
+                    Description:
+                    <textarea 
+                        className='form-section__textarea'
+                        id='description'
+                        name='description'
+                        autoComplete='off'
+                        value={description}  
+                        onChange={onDescriptionChanged}
+                        maxLength={150}
+                    ></textarea>
+                    {!description && (
+                        <p className='form-section__note'>
+                            1 to 150 characters.
+                        </p>
+                    )}
+                </label>
+                
+                <label htmlFor="file" className='form-section__label'>
+                    Image:
+                    <input
+                        className='form-section__file-input'
+                        id='file' 
+                        type="file" 
+                        name="file" 
+                        onChange={onFileChanged} 
+                        accept='image/png, image/jpeg, image/jpg'
+                        ref={fileInputRef}
+                    />
+                    {!selectedFile && (
+                        <p className='form-section__note'>
+                            Allowed extensions: <br />.png, .jpeg, .jpg
+                        </p>
+                    )}
+                </label>
+                <button type="submit" className='form-section__button' disabled={isLoading}>{isLoading ? 'Loading...' : 'Submit'}</button>
+            </form>
+            {isError && 
+                <div className='form-section__error'>
+                    <p className='form-section__error-paragraph'><FontAwesomeIcon icon={faCircleExclamation} />{errMessage}</p>
+                </div>
+            }
+            {isSuccess && 
+                <div className='form-section__success'>
+                    <p className='form-section__success-paragraph'><FontAwesomeIcon icon={faCircleCheck} /> Post successfully added.</p>
+                </div>
+            }
+        </section>
    )
 }
 

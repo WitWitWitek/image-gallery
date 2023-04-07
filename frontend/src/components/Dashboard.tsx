@@ -12,6 +12,8 @@ import Welcome from './Welcome';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightToFile, faArrowLeftLong } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
+import ResendEmailForm from '../features/users/ResendEmailForm';
+import UserConfirmation from '../features/users/UserConfirmation';
 
 interface DashboardProps {
     isMenuOpen?: boolean;
@@ -19,7 +21,7 @@ interface DashboardProps {
 }
 
 const Dashboard = ({ isMenuOpen, setIsMenuOpen }: DashboardProps) => {
-  const { windowSize } = useWindowSize()
+  const windowSize = useWindowSize()
   const [isAddingNew, setIsAddingNew] = useState<boolean>(false)
   const user = useToken()
   const navigate = useNavigate()
@@ -70,11 +72,13 @@ const Dashboard = ({ isMenuOpen, setIsMenuOpen }: DashboardProps) => {
           {isAddingNew && addingNewImage}
         </>
       )}
-      {!user && windowSize.width && windowSize.width > 768 && (
+      {!user && windowSize > 768 && (
         <Routes>
           <Route path='/' element={<Welcome />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<NewUserForm />} />
+          <Route path='confirmation/:emailToken' element={<UserConfirmation />} />
+          <Route path='resend-email' element={<ResendEmailForm />} />
         </Routes>
       )}
     </ul>

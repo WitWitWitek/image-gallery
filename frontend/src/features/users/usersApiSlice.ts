@@ -2,6 +2,7 @@ import { apiSlice } from "../../app/api/apiSlice";
 
 interface SignUpRequest {
     username: string,
+    email?: string,
     password: string,
     newPassword?: string,
 }
@@ -16,6 +17,9 @@ interface SignUpResponse {
     }
 }
 
+type ConfirmationRequest = string
+type ResendEmailRequest = string
+
 export const usersApi = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getUsers: builder.query({
@@ -27,6 +31,21 @@ export const usersApi = apiSlice.injectEndpoints({
                 url: '/users',
                 method: 'POST',
                 body: {...credentials}
+            }),
+            invalidatesTags: ['User']
+        }),
+        confirmUser: builder.mutation<SignUpResponse, ConfirmationRequest>({
+            query: (emailToken) => ({
+                url: `/users/confirmation/${emailToken}`,
+                method: 'GET'
+            }),
+            invalidatesTags: ['User']
+        }),
+        resendVerificationEmail: builder.mutation<SignUpResponse, ResendEmailRequest>({
+            query: (email) => ({
+                url: '/users/resend-email',
+                method: 'POST',
+                body: { email }
             }),
             invalidatesTags: ['User']
         }),
@@ -44,5 +63,7 @@ export const usersApi = apiSlice.injectEndpoints({
 export const {
     useGetUsersQuery,
     useCreateNewUserMutation,
+    useConfirmUserMutation,
+    useResendVerificationEmailMutation,
     useChangeUserPasswordMutation
 } = usersApi;

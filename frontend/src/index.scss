@@ -1,3 +1,4 @@
+
 @use './styles/variables' as *;
 @use './styles/buttons' as *;
 @use './styles/breakpoints' as *;
@@ -37,7 +38,7 @@ body {
 @include sm {
   .app-container {
     display: grid;
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 35% 65%;
     grid-template-rows: 50px calc(100vh - 50px);
     overflow: hidden;
   }
@@ -49,5 +50,11 @@ body {
     grid-column: 2 / 3;
     overflow: auto;
     border-left: 1px solid rgba($white, $alpha: 0.5);
+  }
+}
+
+@include md {
+  .app-container {
+    grid-template-columns: 30% 70%;
   }
 }

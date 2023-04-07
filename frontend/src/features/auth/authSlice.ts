@@ -3,7 +3,7 @@ import { RootState } from "../../app/store";
 
 const authSlice = createSlice({
     name: 'auth',
-    initialState: { token: null},
+    initialState: { token: null },
     reducers: {
         setCredentials: (state, action) => {
             const { accessToken } = action.payload;

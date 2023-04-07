@@ -8,7 +8,7 @@ import { faImage } from '@fortawesome/free-solid-svg-icons'
 import useToken from '../hooks/useToken'
 
 const Navbar = () => {
-  const { windowSize } = useWindowSize()
+  const windowSize = useWindowSize()
   const user = useToken()
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
 
@@ -24,7 +24,7 @@ const Navbar = () => {
           </Link>
         </div>
         
-        {(windowSize.width && windowSize.width < 768) ? (
+        {(user && windowSize < 768) ? (
           <>
             <Dashboard isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
             {user && <button className='navbar__toggle-btn' onClick={menuToggleHandler}>MENU</button>}

@@ -3,10 +3,10 @@ import NewImageForm from "../features/images/NewImageForm"
 import useWindowSize from "../hooks/useWindowSize"
 
 const Home = () => {
-  const { windowSize } = useWindowSize()
+  const windowSize = useWindowSize()
   return (
     <>
-      {(windowSize.width && windowSize.width < 768) && <NewImageForm />}
+      {windowSize < 768 && <NewImageForm />}
       <ImagesList />
     </>
   )

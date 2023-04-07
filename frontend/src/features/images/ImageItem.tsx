@@ -1,17 +1,17 @@
 import { useDeleteImageMutation, useUpdateImageMutation } from "./imagesApiSlice"
 import { imageProps } from "./imageTypes"
-import useDate from '../../hooks/useDate'
 import React, { useState } from "react"
 import '../../styles/ImageItem.scss'
 import useToken from "../../hooks/useToken"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan, faPen, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { dateHelper } from "../../lib/dateHelper"
 
 type ImageItemProps = {
   imageProps: imageProps
 }
 
-const ImageItem = ( { imageProps }: ImageItemProps): JSX.Element => {
+const ImageItem = ({ imageProps }: ImageItemProps) => {
   const { src, _id, title, description, createdAt, updatedAt, user } = imageProps
   const [deleteImage] = useDeleteImageMutation()
   const [updateImage] = useUpdateImageMutation()
@@ -21,7 +21,7 @@ const ImageItem = ( { imageProps }: ImageItemProps): JSX.Element => {
       deleteImage({id: imageId})
     }
   }
-  const { date } = useDate(createdAt, updatedAt)
+  const date = dateHelper(createdAt, updatedAt)
   const loggedUser = useToken()
   
   const [isEditing, setIsEditing] = useState<boolean>(false)
@@ -83,5 +83,5 @@ const ImageItem = ( { imageProps }: ImageItemProps): JSX.Element => {
     </li>
   )
 }
-
+export const ImageItemMemoized = React.memo(ImageItem)
 export default ImageItem

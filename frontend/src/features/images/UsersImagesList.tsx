@@ -7,12 +7,13 @@ import { useLocation } from 'react-router-dom'
 const UsersImagesList = () => {
     const location = useLocation()
     const params = useParams()
+    
     const { 
         data: images,
          isLoading,
          isSuccess,
          isError
-    } = useGetImagesQuery('imagesList', {
+    } = useGetImagesQuery(1 , {
         pollingInterval: 15000,
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true,

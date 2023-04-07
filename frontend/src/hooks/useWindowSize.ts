@@ -1,33 +1,18 @@
 import { useState, useEffect } from "react"
 
-interface WindowParams {
-    width: number | null,
-    height: number | null,
-}
-
 const useWindowSize = () => {
-    const [windowSize, setWindowSize] = useState<WindowParams>({
-        width: null,
-        height: null,
-    })
+    const [windowSize, setWindowSize] = useState<number>(0)
 
     useEffect(() => {
-        setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight
-            })
+        setWindowSize(window.innerWidth)
         const handleResize = () => {
-            setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight
-            })
+            setWindowSize(window.innerWidth)
         }
         window.addEventListener('resize', handleResize)
-
         return () => window.removeEventListener('resize', handleResize)
     }, [])
 
-    return { windowSize }
+    return windowSize
 }
 
 export default useWindowSize

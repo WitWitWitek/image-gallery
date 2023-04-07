@@ -20,7 +20,7 @@ function useObserver<T extends HTMLElement>(stateFn: React.Dispatch<React.SetSta
         if (containerRef.current) observer.observe(containerRef.current as T)
 
         return () => {if (containerRef!.current) observer.unobserve(containerRef!.current as T)}
-      }, [containerRef.current, stateFn])
+      }, [containerRef.current , stateFn])
 
       return [containerRef]
 }
