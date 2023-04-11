@@ -5,12 +5,13 @@ import { setCredentials, logOut } from '../../features/auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: 'https://image-gallery-api-koys.onrender.com',
-    credentials: 'include',
+    credentials: "same-origin",
+    mode: 'cors',
     prepareHeaders: (headers, { getState }) => {
         const token = (getState() as RootState).auth.token;
-
         if (token) {
             headers.set('authorization', `Bearer ${token}`)
+            headers.set("Content-Type", "application/json");
         }
         return headers;
     }
