@@ -4,6 +4,7 @@ exports.corsOptions = void 0;
 const allowedOrigins_1 = require("./allowedOrigins");
 exports.corsOptions = {
     origin: function (origin, callback) {
+        console.log(origin);
         if (allowedOrigins_1.allowedOrigins.indexOf(origin) !== -1 || !origin) {
             callback(null, true);
         }

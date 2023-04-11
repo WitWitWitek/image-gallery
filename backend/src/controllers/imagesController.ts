@@ -45,6 +45,7 @@ export const postImage: RequestHandler = asyncHandler(async (req, res, next) => 
             await Image.create(imageObj)
             res.status(201).json({message: 'New image successfully created!'})
         } catch (err) {
+            console.log(err);
             res.status(400).json({message: 'Error occured!'})
         }
     }
