@@ -4,7 +4,7 @@ import { setCredentials, logOut } from '../../features/auth/authSlice';
 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:3500', // 'http://localhost:3500', // 'https://image-gallery-api-koys.onrender.com'
+    baseUrl: 'https://image-gallery-api-koys.onrender.com', // 'http://localhost:3500', // 'https://image-gallery-api-koys.onrender.com'
     credentials: 'include',
     mode: 'cors',
     prepareHeaders: (headers, { getState }) => {
