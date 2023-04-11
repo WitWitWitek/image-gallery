@@ -37,6 +37,8 @@ const NewImageForm = () => {
         } catch (err) {
             if (isErrorWithMessage(err)) {
                 setErrMessage(err.data.message)
+            } else {
+                console.log(err);
             }
         }
 	};

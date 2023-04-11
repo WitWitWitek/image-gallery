@@ -43,6 +43,8 @@ export const login: RequestHandler = async (req, res, next) => {
         process.env.REFRESH_TOKEN_SECRET as string,
         { expiresIn: '1d'}
     )
+
+    console.log(refreshToken);
     
     res.cookie('jwt', refreshToken, {
         httpOnly: true,

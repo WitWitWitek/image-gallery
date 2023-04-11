@@ -11,7 +11,7 @@ import useObserver from "../../hooks/useObserver"
 const ImagesList = () => {
   const location = useLocation()
   const [page, setPage] = useState<number>(1)
-  const [elementRef] = useObserver<HTMLButtonElement>(setPage)
+  const elementRef = useObserver<HTMLButtonElement>(setPage)
 
   const {
     data: images,

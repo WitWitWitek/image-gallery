@@ -43,6 +43,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         }
     }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
     const refreshToken = jsonwebtoken_1.default.sign({ "username": foundUser === null || foundUser === void 0 ? void 0 : foundUser.username }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
+    console.log(refreshToken);
     res.cookie('jwt', refreshToken, {
         httpOnly: true,
         secure: true,
