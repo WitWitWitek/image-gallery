@@ -29,6 +29,11 @@
         list-style: none;
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
+
+        &__refetch-btn {
+            margin-top: auto;
+        }
     }
 }
 
@@ -42,6 +47,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
+            margin-bottom: 1rem;
         }
 
     }

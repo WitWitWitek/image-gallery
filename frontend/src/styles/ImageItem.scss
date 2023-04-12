@@ -18,6 +18,7 @@
         width: 100%;
         height: 60%;
         overflow: hidden;
+        position: relative;
     }
 
     &__image {
@@ -84,6 +85,17 @@
         @include inputField;
         @include btn;
         margin: 0px 1px;
+    }
+
+    &__user {
+        @include btn;
+        position: absolute;
+        top: 4%;
+        left: 3%;
+        z-index: 2;
+        padding: 0.1rem 0.4rem;
+        text-decoration: none;
+        font-size: 1.5rem;
     }
 }
 
@@ -152,5 +164,17 @@
         &__date {
             font-size: 1.4rem;
         }
+    }
+}
+
+.skeleton {
+    border: 1px solid rgba($white, $alpha: .7);
+    background: linear-gradient(105deg, rgba($white, $alpha: .7), rgba($white, $alpha: .1)) ;
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    50% {
+        opacity: .5;
     }
 }

@@ -6,6 +6,7 @@ import useToken from "../../hooks/useToken"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan, faPen, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { dateHelper } from "../../lib/dateHelper"
+import { Link } from "react-router-dom"
 
 type ImageItemProps = {
   imageProps: imageProps
@@ -50,6 +51,7 @@ const ImageItem = ({ imageProps }: ImageItemProps) => {
         <div 
           className="image-item__image-container"
           >
+          <Link className='image-item__user' to={`/user/${user}/user-gallery`}>{user}</Link>
           <img className="image-item__image"
             src={src}
             alt={title}

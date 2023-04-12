@@ -11,7 +11,6 @@ const PersistLogin = () => {
     const [trueSuccess, setTrueSuccess] = useState<boolean>(false)
 
     const [refresh, {
-        isLoading,
         isSuccess,
         isError,
     }] = useRefreshMutation()   
@@ -33,8 +32,7 @@ const PersistLogin = () => {
       }
       // eslint-disable-next-line
     }, [])
-    
-    if (isLoading) return <p>Loading...</p>
+
     if (isError) return <Navigate to='/login' />
     if (token) return <Outlet />
     

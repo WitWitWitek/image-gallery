@@ -24,12 +24,10 @@
             line-height: 4rem;
         }
 
-        &-icon {
+        &-image {
             position: relative;
-            z-index: -1;
-            color: $white;
-            font-size: 20rem;
-            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            width: 90%;
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
     }
 
@@ -60,13 +58,15 @@
 @include md {
     .public {
         &__header {
-            &-icon {
-                font-size: 35rem;
-            }
 
             &-title {
                 font-size: 9rem;
                 line-height: 7rem;
+            }
+
+            &-image {
+                width: 40%;
+                max-height: 80%;
             }
         }
 

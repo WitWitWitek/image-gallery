@@ -7,6 +7,7 @@ import { useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import useObserver from "../../hooks/useObserver"
+import { SkeletonImageItem } from "./SkeletonImageItem"
 
 const ImagesList = () => {
   const location = useLocation()
@@ -16,16 +17,14 @@ const ImagesList = () => {
   const {
     data: images,
     isLoading,
-    // isSuccess,
+    isSuccess,
     isError,
-    // error
   } = useGetImagesQuery(page, {
     pollingInterval: 15000,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true
   })
-  
-  if (isLoading) return <p>Loading...</p>
+
   if (isError) return <Navigate to='/login' state={{ from: location }} replace={true} />
   
   return (
@@ -38,10 +37,17 @@ const ImagesList = () => {
             imageProps={imageData} 
           />
         ))}
+        {isLoading && (
+          <>
+            <SkeletonImageItem />
+            <SkeletonImageItem />
+            <SkeletonImageItem />
+            <SkeletonImageItem />
+          </>
+        )}
       </ul>
-      {isLoading && <p>Loading...</p>}
       {
-        images.listOfImgs.length !== images.imgsCount ?
+        isSuccess && images.listOfImgs.length !== images.imgsCount ?
         <button ref={elementRef} className='image-list__refetch-btn' onClick={() => setPage(prev => prev +1)}><FontAwesomeIcon icon={faArrowDown} /></button> :
         <p style={{textAlign: 'center'}}>This is the end of list... Scroll up.</p>
       }

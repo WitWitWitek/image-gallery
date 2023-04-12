@@ -14,11 +14,10 @@ const Navbar = () => {
 
   const menuToggleHandler = () => setIsMenuOpen(prev => !prev)
 
-  
   return (
     <nav className="navbar">
         <div className='navbar__logo'>
-          <Link to="/">
+          <Link to={!user ? '/' : '/dashboard'}>
             <span><FontAwesomeIcon icon={faImage}/></span>
             Image-gallery
           </Link>

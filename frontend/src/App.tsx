@@ -23,6 +23,7 @@ const App = () => {
                 <Route path='signup' element={<Public />} />
                 <Route path='confirmation/:emailToken' element={<Public />} />
                 <Route path='resend-email' element={<Public />} />
+                <Route path="*" element={<div>Error 404 - page not found!</div>} />
             </>
         )
     } else {
@@ -33,6 +34,7 @@ const App = () => {
                 <Route path='signup' element={<NewUserForm />} />
                 <Route path='confirmation/:emailToken' element={<UserConfirmation />} />
                 <Route path='resend-email' element={<ResendEmailForm />} />
+                <Route path="*" element={<div>Error 404 - page not found!</div>} />
             </>
         )
     }

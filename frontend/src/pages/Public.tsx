@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImage } from '@fortawesome/free-solid-svg-icons'
 import useWindowSize from "../hooks/useWindowSize"
 import '../styles/Public.scss'
 
@@ -21,7 +19,7 @@ const Public = () => {
   return (
     <main className="public">
       <header className="public__header">
-        <FontAwesomeIcon icon={faImage} className='public__header-icon animate-pulse' />
+        <img className="public__header-image" src="/home_cover.png" alt="home cover" />
         <h1 className="public__header-title">Welcome on Image Gallery!</h1>
       </header>
       <section className="public__welcome">
