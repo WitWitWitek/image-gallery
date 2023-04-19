@@ -7,7 +7,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const imageSchema = new mongoose_1.default.Schema({
     user: {
         type: String,
-        ref: 'User',
+        ref: "User",
         required: true,
     },
     imagekitId: {
@@ -27,4 +27,4 @@ const imageSchema = new mongoose_1.default.Schema({
         required: true,
     },
 }, { timestamps: true });
-exports.default = mongoose_1.default.model('Image', imageSchema);
+exports.default = mongoose_1.default.model("Image", imageSchema);

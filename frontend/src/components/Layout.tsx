@@ -1,11 +1,11 @@
-import { Outlet } from "react-router-dom"
-import useWindowSize from "../hooks/useWindowSize"
-import Dashboard from "./Dashboard"
-import Navbar from "./Navbar"
+import { Outlet } from 'react-router-dom';
+import useWindowSize from '../hooks/useWindowSize';
+import Dashboard from './Dashboard';
+import Navbar from './Navbar';
 
-const Layout = () => {
-  const windowSize = useWindowSize()
-  
+function Layout() {
+  const windowSize = useWindowSize();
+
   return (
     <main className="app-container">
       <Navbar />
@@ -14,8 +14,8 @@ const Layout = () => {
         <Outlet />
       </div>
     </main>
-    
-  )
+
+  );
 }
 
-export default Layout
+export default Layout;

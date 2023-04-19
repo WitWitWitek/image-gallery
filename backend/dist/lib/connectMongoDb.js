@@ -18,7 +18,7 @@ const connectMongoDb = () => __awaiter(void 0, void 0, void 0, function* () {
         yield mongoose_1.default.connect(process.env.MONGODB_URI);
     }
     catch (error) {
-        console.log('MongoDB connection:', error);
+        console.log("MongoDB connection:", error);
     }
 });
 exports.default = connectMongoDb;

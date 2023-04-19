@@ -11,7 +11,7 @@ const userSchema = new mongoose_1.default.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
@@ -19,7 +19,7 @@ const userSchema = new mongoose_1.default.Schema({
     },
     confirmed: {
         type: Boolean,
-        default: false
-    }
+        default: false,
+    },
 });
-exports.default = mongoose_1.default.model('User', userSchema);
+exports.default = mongoose_1.default.model("User", userSchema);

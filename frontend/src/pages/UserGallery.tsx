@@ -1,11 +1,10 @@
-import UsersImagesList from "../features/images/UsersImagesList"
+import React from 'react';
+import UsersImagesList from '../features/images/UsersImagesList';
 
-const UserGallery = () => {
-    return (
-        <>
-            <UsersImagesList />
-        </>
-    )
+function UserGallery() {
+  return (
+    <UsersImagesList />
+  );
 }
 
-export default UserGallery
+export default UserGallery;

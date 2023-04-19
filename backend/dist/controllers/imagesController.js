@@ -17,44 +17,44 @@ const imagekit_1 = require("../lib/imagekit");
 const Image_1 = __importDefault(require("../models/Image"));
 const User_1 = __importDefault(require("../models/User"));
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
-exports.getAllImages = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const page = +req.query.page || 1;
+exports.getAllImages = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const page = req.query.page ? +req.query.page : 1;
     const imgsCount = yield Image_1.default.count();
     const imgsPerPage = 4;
-    const listOfImgs = yield Image_1.default.find().sort({ "createdAt": -1 }).limit(imgsPerPage * page);
+    const listOfImgs = yield Image_1.default.find()
+        .sort({ createdAt: -1 })
+        .limit(imgsPerPage * page);
     res.json({ listOfImgs, imgsCount });
-    // REFACTOR NEEDED
-    // zmienić array zeby nie dawalo id imageId
 }));
-exports.postImage = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.postImage = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     const userExist = yield User_1.default.findOne({ username: req.body.user }).exec();
     if (!userExist) {
-        res.status(401).json({ message: 'User doesn\'t exists' });
+        res.status(401).json({ message: "User doesn't exists" });
         return;
     }
-    const result = yield (0, imagekit_1.imagekitUploadHandler)({
-        folder: 'images-app',
+    const result = (yield (0, imagekit_1.imagekitUploadHandler)({
+        folder: "images-app",
         file: (_a = req.file) === null || _a === void 0 ? void 0 : _a.buffer,
-        fileName: (_b = req.file) === null || _b === void 0 ? void 0 : _b.originalname
-    });
+        fileName: (_b = req.file) === null || _b === void 0 ? void 0 : _b.originalname,
+    }));
     const imageObj = {
         imagekitId: result.fileId,
         src: result.url,
         title: req.body.title,
         description: req.body.description,
-        user: userExist.username
+        user: userExist.username,
     };
     try {
         yield Image_1.default.create(imageObj);
-        res.status(201).json({ message: 'New image successfully created!' });
+        res.status(201).json({ message: "New image successfully created!" });
     }
     catch (err) {
         console.log(err);
-        res.status(400).json({ message: 'Error occured!' });
+        res.status(400).json({ message: "Error occured!" });
     }
 }));
-exports.updateImage = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.updateImage = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { imageId } = req.params;
     const { updatedTitle, updatedDescription } = req.body;
     const image = yield Image_1.default.findOne({ _id: imageId });
@@ -67,10 +67,14 @@ exports.updateImage = (0, express_async_handler_1.default)((req, res, next) => _
     image.save();
     res.status(201).json({ message: "Image data succesfully updated!" });
 }));
-exports.deleteImage = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.deleteImage = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { imageId } = req.params;
-    const imagekitId = yield Image_1.default.findById(imageId);
-    yield (0, imagekit_1.imagekitDeleteHandler)(imagekitId.imagekitId);
+    const image = yield Image_1.default.findById(imageId);
+    if (!image) {
+        res.status(404).json({ message: "Image doesn't exists." });
+        return;
+    }
+    yield (0, imagekit_1.imagekitDeleteHandler)(image.imagekitId);
     yield Image_1.default.deleteOne({ _id: imageId });
-    res.json({ message: 'Image successfully deleted' });
+    res.json({ message: "Image successfully deleted" });
 }));

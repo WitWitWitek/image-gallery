@@ -1,22 +1,22 @@
-import jwtDecode from "jwt-decode";
-import { selectCurrentToken } from "../features/auth/authSlice";
-import { useSelector } from "react-redux";
+import jwtDecode from 'jwt-decode';
+import { useSelector } from 'react-redux';
+import { selectCurrentToken } from '../features/auth/authSlice';
 
 interface DecodedJwt {
-    UserInfo: {
-        username: string
-    }
+  UserInfo: {
+    username: string
+  }
 }
 
 const useToken = () => {
   const token = useSelector(selectCurrentToken);
-  let loggedUser: string = ''
+  let loggedUser: string = '';
   if (token) {
-    const decodedToken = jwtDecode<DecodedJwt>(token)
-    const { username } = decodedToken.UserInfo
-    loggedUser = username
+    const decodedToken = jwtDecode<DecodedJwt>(token);
+    const { username } = decodedToken.UserInfo;
+    loggedUser = username;
   }
-  return loggedUser
-}
+  return loggedUser;
+};
 
-export default useToken
+export default useToken;

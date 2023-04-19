@@ -11,16 +11,16 @@ exports.transporter = nodemailer_1.default.createTransport({
     secure: true,
     auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD
+        pass: process.env.EMAIL_PASSWORD,
     },
     tls: {
-        rejectUnauthorized: false
-    }
+        rejectUnauthorized: false,
+    },
 });
 const mailOptions = (recipent, href) => ({
     from: process.env.EMAIL_ADDRESS,
     to: recipent,
-    subject: 'Confirm your account on Image-Gallery',
+    subject: "Confirm your account on Image-Gallery",
     html: `${href}`,
 });
 exports.mailOptions = mailOptions;

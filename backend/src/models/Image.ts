@@ -1,27 +1,30 @@
 import mongoose from "mongoose";
 
-const imageSchema = new mongoose.Schema({
+const imageSchema = new mongoose.Schema(
+  {
     user: {
-        type: String,
-        ref: 'User',
-        required: true,
+      type: String,
+      ref: "User",
+      required: true,
     },
     imagekitId: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     src: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     title: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     description: {
-        type: String, 
-        required: true,
+      type: String,
+      required: true,
     },
-}, { timestamps: true })
+  },
+  { timestamps: true }
+);
 
-export default mongoose.model('Image', imageSchema)
+export default mongoose.model("Image", imageSchema);

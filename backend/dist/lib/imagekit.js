@@ -12,17 +12,19 @@ const imagekit = new imagekit_1.default({
 });
 const imagekitUploadHandler = (optionsObj) => {
     return new Promise((resolve, reject) => {
-        imagekit.upload(optionsObj)
-            .then(result => resolve(result))
-            .catch(err => reject(err));
+        imagekit
+            .upload(optionsObj)
+            .then((result) => resolve(result))
+            .catch((err) => reject(err));
     });
 };
 exports.imagekitUploadHandler = imagekitUploadHandler;
 const imagekitDeleteHandler = (id) => {
     return new Promise((resolve, reject) => {
-        imagekit.deleteFile(id)
-            .then(result => resolve(result))
-            .catch(err => reject(err));
+        imagekit
+            .deleteFile(id)
+            .then((result) => resolve(result))
+            .catch((err) => reject(err));
     });
 };
 exports.imagekitDeleteHandler = imagekitDeleteHandler;

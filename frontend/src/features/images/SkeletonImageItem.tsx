@@ -1,3 +1,3 @@
-export const SkeletonImageItem = () => {
-  return <li className="image-item skeleton"></li>
+export default function SkeletonImageItem() {
+  return <li className="image-item skeleton" />;
 }

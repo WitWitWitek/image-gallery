@@ -1,20 +1,21 @@
-import { Link } from "react-router-dom"
-import useWindowSize from "../hooks/useWindowSize"
-import '../styles/Public.scss'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import useWindowSize from '../hooks/useWindowSize';
+import '../styles/Public.scss';
 
-const Public = () => {
-  const windowSize = useWindowSize()
+function Public() {
+  const windowSize = useWindowSize();
 
-  const authButtons = (    
+  const authButtons = (
     <p>
-          <Link to='/login'>
-            <button className="public__btn-login">Login</button>
-          </Link>
-          <Link to='/signup'>
-            <button className="public__btn-signup">Sign up</button>
-          </Link>
+      <Link to="/login">
+        <button className="public__btn-login" type="button">Login</button>
+      </Link>
+      <Link to="/signup">
+        <button className="public__btn-signup" type="button">Sign up</button>
+      </Link>
     </p>
-  )
+  );
 
   return (
     <main className="public">
@@ -24,12 +25,12 @@ const Public = () => {
       </header>
       <section className="public__welcome">
         <p className="public__desc">
-          Share images via our platform with friends. Enjoy images collections of all users.    
+          Share images via our platform with friends. Enjoy images collections of all users.
         </p>
         {windowSize < 768 && authButtons}
       </section>
     </main>
-  )
+  );
 }
 
-export default Public
+export default Public;

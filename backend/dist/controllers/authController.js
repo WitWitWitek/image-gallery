@@ -17,71 +17,73 @@ const User_1 = __importDefault(require("../models/User"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
-const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
     if (!username || !password) {
-        res.status(400).json({ message: 'All credentials are required' });
+        res.status(400).json({ message: "All credentials are required" });
         return;
     }
     const foundUser = yield User_1.default.findOne({ username });
     if (!foundUser) {
-        res.status(401).json({ message: 'User does not exist' });
+        res.status(401).json({ message: "User does not exist" });
         return;
     }
     const passwordsMatch = yield bcrypt_1.default.compare(password, foundUser.password);
     if (!passwordsMatch) {
-        res.status(401).json({ message: 'Unathorized. Invalid Password.' });
+        res.status(401).json({ message: "Unathorized. Invalid Password." });
         return;
     }
     if (!foundUser.confirmed) {
-        res.status(401).json({ message: 'User not confirmed!' });
+        res.status(401).json({ message: "User not confirmed!" });
         return;
     }
     const accessToken = jsonwebtoken_1.default.sign({
-        "UserInfo": {
-            "username": foundUser.username
-        }
-    }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-    const refreshToken = jsonwebtoken_1.default.sign({ "username": foundUser === null || foundUser === void 0 ? void 0 : foundUser.username }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
-    console.log(refreshToken);
-    res.cookie('jwt', refreshToken, {
+        UserInfo: {
+            username: foundUser.username,
+        },
+    }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" });
+    const refreshToken = jsonwebtoken_1.default.sign({ username: foundUser === null || foundUser === void 0 ? void 0 : foundUser.username }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "1d" });
+    res.cookie("jwt", refreshToken, {
         httpOnly: true,
         secure: true,
-        sameSite: 'none',
+        sameSite: "none",
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     res.json({ accessToken });
 });
 exports.login = login;
-exports.refresh = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.refresh = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const cookies = req.cookies;
     if (!(cookies === null || cookies === void 0 ? void 0 : cookies.jwt)) {
-        res.status(401).json({ message: 'Unauthorized.' });
+        res.status(401).json({ message: "Unauthorized." });
         return;
     }
     const refreshToken = cookies.jwt;
-    jsonwebtoken_1.default.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, 
-    // find TYPES @@@@@@@@@@@@
-    ((err, decoded) => __awaiter(void 0, void 0, void 0, function* () {
-        if (err)
-            return res.status(403).json({ message: 'Forbidden' });
-        const foundUser = yield User_1.default.findOne({ username: decoded.username }).exec();
-        if (!foundUser)
-            return res.status(401).json({ message: 'Unauthorized' });
-        const accessToken = jsonwebtoken_1.default.sign({
-            "UserInfo": {
-                "username": foundUser.username,
-            }
-        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-        res.json({ accessToken });
-    })));
+    jsonwebtoken_1.default.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => __awaiter(void 0, void 0, void 0, function* () {
+        if (err) {
+            return res.status(403).json({ message: "Forbidden" });
+        }
+        if (typeof decoded === "object" && "username" in decoded) {
+            const foundUser = yield User_1.default.findOne({
+                username: decoded.username,
+            }).exec();
+            if (!foundUser)
+                return res.status(401).json({ message: "Unauthorized" });
+            const accessToken = jsonwebtoken_1.default.sign({
+                UserInfo: {
+                    username: foundUser.username,
+                },
+            }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" });
+            res.json({ accessToken });
+        }
+    }));
 }));
-exports.logut = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.logut = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const cookies = req.cookies;
     if (!(cookies === null || cookies === void 0 ? void 0 : cookies.jwt)) {
         res.sendStatus(204);
         return;
     }
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true });
-    res.json({ message: 'Cookie cleared' });
+    res.clearCookie("jwt", { httpOnly: true, sameSite: "none", secure: true });
+    res.json({ message: "Cookie cleared" });
 }));
