@@ -14,6 +14,10 @@
         padding-top: 2px;
         padding-bottom: 2px;
         width: 100%;
+        &:disabled {
+            background-color: $darkSeaBlack;
+            border-color: $darkSeaBlack;
+        }
     }
 }
 

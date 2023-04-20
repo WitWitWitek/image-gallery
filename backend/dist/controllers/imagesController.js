@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteImage = exports.updateImage = exports.postImage = exports.getAllImages = void 0;
+exports.deleteImage = exports.updateImage = exports.postImage = exports.getUserImages = exports.getAllImages = void 0;
 const imagekit_1 = require("../lib/imagekit");
 const Image_1 = __importDefault(require("../models/Image"));
 const User_1 = __importDefault(require("../models/User"));
@@ -22,6 +22,16 @@ exports.getAllImages = (0, express_async_handler_1.default)((req, res) => __awai
     const imgsCount = yield Image_1.default.count();
     const imgsPerPage = 4;
     const listOfImgs = yield Image_1.default.find()
+        .sort({ createdAt: -1 })
+        .limit(imgsPerPage * page);
+    res.json({ listOfImgs, imgsCount });
+}));
+exports.getUserImages = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { user } = req.params;
+    const page = req.query.page ? +req.query.page : 1;
+    const imgsCount = yield Image_1.default.find({ user }).count();
+    const imgsPerPage = 4;
+    const listOfImgs = yield Image_1.default.find({ user })
         .sort({ createdAt: -1 })
         .limit(imgsPerPage * page);
     res.json({ listOfImgs, imgsCount });

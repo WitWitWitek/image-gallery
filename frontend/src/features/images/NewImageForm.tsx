@@ -26,6 +26,7 @@ function NewImageForm() {
   const handleSubmission = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (!title || !description || !selectedFile) {
+      // eslint-disable-next-line no-alert
       alert('fill in all inputs');
       return;
     }
@@ -40,6 +41,7 @@ function NewImageForm() {
       if (isErrorWithMessage(err)) {
         setErrMessage(err.data.message);
       } else {
+        // eslint-disable-next-line no-console
         console.log(err);
       }
     }

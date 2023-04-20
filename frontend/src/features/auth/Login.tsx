@@ -69,6 +69,7 @@ function Login() {
       </form>
       <p className="form-section__linkto">
         No account yet?
+        {' '}
         <Link to="/signup" className="form-section__button">Sign up</Link>
       </p>
       {isError

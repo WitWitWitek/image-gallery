@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import useToken from '../hooks/useToken';
 import ChangePasswordForm from '../features/users/ChangePasswordForm';

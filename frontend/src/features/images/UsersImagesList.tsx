@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { ImageItemMemoized } from './ImageItem';
-import { useGetImagesQuery } from './imagesApiSlice';
+import { useGetUserImagesQuery } from './imagesApiSlice';
 import ImageProps from './imageTypes';
 import SkeletonImageItem from './SkeletonImageItem';
 import useObserver from '../../hooks/useObserver';
@@ -19,20 +19,18 @@ function UsersImagesList() {
     isLoading,
     isSuccess,
     isError,
-  } = useGetImagesQuery(page, {
+  } = useGetUserImagesQuery({ user: params.userId as string, page }, {
     pollingInterval: 15000,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   });
 
   let userImages = null;
+
   if (isError) return <Navigate to="/login" state={{ from: location }} replace />;
 
   if (isSuccess && images) {
-    const filteredUserImages = images.listOfImgs.filter(
-      (image: ImageProps) => image.user === params.userId,
-    );
-    userImages = filteredUserImages.map((imageData: ImageProps) => (
+    userImages = images.listOfImgs.map((imageData: ImageProps) => (
       <ImageItemMemoized
         key={imageData._id}
         imageProps={imageData}
@@ -49,26 +47,27 @@ function UsersImagesList() {
     );
   }
 
+  const isRefetchDisabled = images?.listOfImgs.length === images?.imgsCount;
+
   return (
     <div className="image-list">
       <h2>Your images: </h2>
       <ul className="image-list__ul">
         {userImages}
       </ul>
-      {
-                isSuccess && images.listOfImgs.length !== images.imgsCount
-                  ? (
-                    <button
-                      ref={elementRef}
-                      className="image-list__refetch-btn"
-                      onClick={() => setPage((prev) => prev + 1)}
-                      type="button"
-                    >
-                      <FontAwesomeIcon icon={faArrowDown} />
-                    </button>
-                  )
-                  : <p style={{ textAlign: 'center' }}>This is the end of list... Scroll up.</p>
-            }
+      <button
+        ref={elementRef}
+        className="image-list__refetch-btn"
+        onClick={() => setPage((prev) => prev + 1)}
+        type="button"
+        disabled={isRefetchDisabled}
+      >
+        {
+          !isRefetchDisabled
+            ? <FontAwesomeIcon icon={faArrowDown} />
+            : 'No new images left'
+        }
+      </button>
     </div>
   );
 }

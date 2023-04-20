@@ -10,6 +10,7 @@ const verifyJWT_1 = __importDefault(require("../middleware/verifyJWT"));
 router.use(verifyJWT_1.default);
 router
     .get("/", imagesController_1.getAllImages)
+    .get("/:user", imagesController_1.getUserImages)
     .post("/", imagesController_1.postImage)
     .patch("/:imageId", imagesController_1.updateImage)
     .delete("/:imageId", imagesController_1.deleteImage);

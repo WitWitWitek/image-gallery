@@ -14,6 +14,17 @@ export const imagesApi = apiSlice.injectEndpoints({
         }
       },
     }),
+    getUserImages: builder.query({
+      query: ({ user, page }: { user: string, page?: number }) => `/images/${user}?page=${page || 1}`,
+      providesTags: ['Image'],
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          dispatch(logOut());
+        }
+      },
+    }),
     addNewImage: builder.mutation({
       query: (image) => ({
         url: '/images',
@@ -45,6 +56,7 @@ export const imagesApi = apiSlice.injectEndpoints({
 
 export const {
   useGetImagesQuery,
+  useGetUserImagesQuery,
   useAddNewImageMutation,
   useUpdateImageMutation,
   useDeleteImageMutation,

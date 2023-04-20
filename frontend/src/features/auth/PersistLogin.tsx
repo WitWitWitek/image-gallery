@@ -22,6 +22,7 @@ function PersistLogin() {
           await refresh('');
           setTrueSuccess(true);
         } catch (err) {
+          // eslint-disable-next-line no-console
           console.log(err);
         }
       };
@@ -37,6 +38,7 @@ function PersistLogin() {
   if (token) return <Outlet />;
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {isSuccess && trueSuccess && (<Outlet />)}
     </>

@@ -17,7 +17,6 @@ function ImagesList() {
   const {
     data: images,
     isLoading,
-    isSuccess,
     isError,
   } = useGetImagesQuery(page, {
     pollingInterval: 15000,
@@ -26,6 +25,8 @@ function ImagesList() {
   });
 
   if (isError) return <Navigate to="/login" state={{ from: location }} replace />;
+
+  const isRefetchDisabled = images?.listOfImgs.length === images?.imgsCount;
 
   return (
     <div className="image-list">
@@ -46,11 +47,19 @@ function ImagesList() {
           </>
         )}
       </ul>
-      {
-        isSuccess && images.listOfImgs.length !== images.imgsCount
-          ? <button ref={elementRef} className="image-list__refetch-btn" onClick={() => setPage((prev) => prev + 1)} type="button" aria-label="next page"><FontAwesomeIcon icon={faArrowDown} /></button>
-          : <p style={{ textAlign: 'center' }}>This is the end of list... Scroll up.</p>
-      }
+      <button
+        ref={elementRef}
+        className="image-list__refetch-btn"
+        onClick={() => setPage((prev) => prev + 1)}
+        type="button"
+        disabled={isRefetchDisabled}
+      >
+        {
+          !isRefetchDisabled
+            ? <FontAwesomeIcon icon={faArrowDown} />
+            : 'No new images left'
+        }
+      </button>
     </div>
   );
 }

@@ -20,6 +20,18 @@ export const getAllImages: RequestHandler = asyncHandler(async (req, res) => {
   res.json({ listOfImgs, imgsCount });
 });
 
+export const getUserImages: RequestHandler = asyncHandler(async (req, res) => {
+  const { user } = req.params;
+  const page = req.query.page ? +req.query.page : 1;
+  const imgsCount = await Image.find({ user }).count();
+  const imgsPerPage = 4;
+
+  const listOfImgs = await Image.find({ user })
+    .sort({ createdAt: -1 })
+    .limit(imgsPerPage * page);
+  res.json({ listOfImgs, imgsCount });
+});
+
 export const postImage: RequestHandler = asyncHandler(async (req, res) => {
   const userExist = await User.findOne({ username: req.body.user }).exec();
   if (!userExist) {

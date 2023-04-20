@@ -21,6 +21,7 @@ function ImageItem({ imageProps }: ImageItemProps) {
   const [updateImage] = useUpdateImageMutation();
 
   const deleteImageHandler = (imageId: string) => {
+    // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?') === true) {
       deleteImage({ id: imageId });
     }
@@ -49,7 +50,7 @@ function ImageItem({ imageProps }: ImageItemProps) {
   ) => setUpdatedDescription(e.target.value);
 
   const imageClickHandler = (e: React.MouseEvent<HTMLImageElement>) => {
-    const image = e.target as HTMLImageElement;
+    e.target as HTMLImageElement;
   };
 
   return (

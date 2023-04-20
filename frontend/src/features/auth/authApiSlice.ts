@@ -32,6 +32,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
             dispatch(apiSlice.util.resetApiState());
           }, 1000);
         } catch (err) {
+          // eslint-disable-next-line no-console
           console.log(err);
         }
       },
@@ -47,6 +48,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           const { accessToken } = data;
           dispatch(setCredentials({ accessToken }));
         } catch (err) {
+          // eslint-disable-next-line no-console
           console.log(err);
         }
       },

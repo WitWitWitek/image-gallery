@@ -168,6 +168,7 @@ function NewUserForm() {
       </form>
       <p className="form-section__linkto">
         Already have an account?
+        {' '}
         <Link to="/login" className="form-section__button">Log in</Link>
       </p>
       {(validationError || isError)
