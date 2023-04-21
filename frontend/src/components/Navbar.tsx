@@ -2,13 +2,11 @@ import '../styles/Navbar.scss';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faCompass } from '@fortawesome/free-solid-svg-icons';
 import Dashboard from './Dashboard';
-import useWindowSize from '../hooks/useWindowSize';
 import useToken from '../hooks/useToken';
 
 function Navbar() {
-  const windowSize = useWindowSize();
   const user = useToken();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
@@ -23,10 +21,10 @@ function Navbar() {
         </Link>
       </div>
 
-      {(user && windowSize < 768) ? (
+      {user ? (
         <>
-          <Dashboard isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-          {user && <button className="navbar__toggle-btn" onClick={menuToggleHandler} type="button">MENU</button>}
+          <div className="navbar__dashboard-mobile-container"><Dashboard isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} /></div>
+          <button className="navbar__toggle-btn" onClick={menuToggleHandler} aria-label="menu button" type="button"><FontAwesomeIcon icon={faCompass} /></button>
         </>
       ) : null}
     </nav>

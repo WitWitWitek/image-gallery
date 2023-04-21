@@ -55,6 +55,14 @@
     }
 }
 
+@include sm {
+    .public {
+      &__auth-btns {
+        display: none;
+      }
+    }
+}
+
 @include md {
     .public {
         &__header {

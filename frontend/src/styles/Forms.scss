@@ -141,3 +141,11 @@
         }
     }
 }
+
+@include sm {
+    .form-section {
+        &__mobile-form-container {
+            display: none;
+        }
+    }
+}

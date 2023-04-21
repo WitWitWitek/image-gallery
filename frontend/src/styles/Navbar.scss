@@ -34,9 +34,16 @@
     }
 
     &__toggle-btn {
-        @include btn;
         position: relative;
         z-index: 101;
+        background-color: transparent;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: $lightRed;
+        &:hover {
+            color: $white;
+        }
     }
 }
 
@@ -44,6 +51,9 @@
     .navbar {
         grid-column: 1 / 2;
         &__toggle-btn {
+            display: none;
+        }
+        &__dashboard-mobile-container {
             display: none;
         }
     }
