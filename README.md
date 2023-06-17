@@ -2,7 +2,7 @@
 Image gallery portfolio website. 
 
 ## Live: 
-> [https://interactive-comments-section-1lo8.onrender.com](https://image-gallery-kim0.onrender.com/)
+> [https://image-gallery-kim0.onrender.com/](https://image-gallery-kim0.onrender.com/)
 
 ***Notificaton: please wait until onrender.com restart API!***
 
